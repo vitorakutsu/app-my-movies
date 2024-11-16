@@ -24,7 +24,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SearchFragment extends Fragment {
-    private MovieApiService movieApiService;
+    private MovieApiService MovieApiService;
     private RecyclerView recyclerView;
     private MovieAdapter movieAdapter;
 
@@ -36,7 +36,7 @@ public class SearchFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerViewMovies);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        movieApiService = RetrofitInstance.getRetrofitInstance().create(MovieApiService.class);
+        MovieApiService = RetrofitInstance.getRetrofitInstance().create(MovieApiService.class);
 
         searchButton.setOnClickListener(v -> {
             String query = searchInput.getText().toString();
@@ -47,7 +47,7 @@ public class SearchFragment extends Fragment {
     }
 
     private void searchMovies(String query) {
-        Call<List<Movie>> call = movieApiService.getMovies(query);
+        Call<List<Movie>> call = MovieApiService.getMovies(query);
         call.enqueue(new Callback<List<Movie>>() {
             @Override
             public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
@@ -76,7 +76,8 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Movie>> call, Throwable t) {
-                Toast.makeText(getContext(), "Erro ao buscar filmes", Toast.LENGTH_SHORT).show();
+                Log.d("SearchFragment", "Erro ao buscar filmes: " + t.getMessage());
+                Toast.makeText(getContext(), "Erro ao buscar filmes: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
