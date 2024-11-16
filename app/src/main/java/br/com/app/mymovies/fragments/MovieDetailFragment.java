@@ -33,14 +33,23 @@ public class MovieDetailFragment extends Fragment {
 
         ImageView thumbnail = view.findViewById(R.id.movieThumbnail);
         TextView title = view.findViewById(R.id.movieTitle);
+        TextView year = view.findViewById(R.id.movieYear);
         TextView extract = view.findViewById(R.id.movieExtract);
+        TextView genres = view.findViewById(R.id.movieGenres);
+        TextView cast = view.findViewById(R.id.movieCast);
 
         if (movie != null) {
             title.setText(movie.getTitle());
+            year.setText(String.format("%d", movie.getYear()));
             extract.setText(movie.getExtract());
+
+            genres.setText("Gêneros: " + String.join(", ", movie.getGenres()));
+            cast.setText("Elenco: " + String.join(", ", movie.getCast()));
+
             Glide.with(this).load(movie.getThumbnail()).into(thumbnail);
         }
 
         return view;
     }
+
 }
