@@ -6,12 +6,4 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
-
-    <item
-        android:id="@+id/nav_search"
-        android:title="Search" />
-
-    <item
-        android:id="@+id/nav_movie_detail"
-        android:title="Movie Details" />
 </menu>
