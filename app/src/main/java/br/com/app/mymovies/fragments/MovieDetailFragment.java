@@ -35,7 +35,6 @@ public class MovieDetailFragment extends Fragment {
         TextView title = view.findViewById(R.id.movieTitle);
         TextView extract = view.findViewById(R.id.movieExtract);
 
-        // Atualizar os dados do filme
         if (movie != null) {
             title.setText(movie.getTitle());
             extract.setText(movie.getExtract());

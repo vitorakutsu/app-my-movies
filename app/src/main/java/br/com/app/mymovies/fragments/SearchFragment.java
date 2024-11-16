@@ -1,6 +1,7 @@
 package br.com.app.mymovies.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,15 +53,24 @@ public class SearchFragment extends Fragment {
             public void onResponse(Call<List<Movie>> call, Response<List<Movie>> response) {
                 if (response.isSuccessful()) {
                     List<Movie> movies = response.body();
-                    movieAdapter = new MovieAdapter(movies, getContext(), movie -> {
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable("movie", movie);
-                        getParentFragmentManager().beginTransaction()
-                                .replace(R.id.nav_host_fragment_content_main, MovieDetailFragment.class, bundle)
-                                .addToBackStack(null)
-                                .commit();
-                    });
-                    recyclerView.setAdapter(movieAdapter);
+                    if (movies != null && !movies.isEmpty()) {
+                        Log.d("SearchFragment", "Filmes encontrados: " + movies.size());
+                        movieAdapter = new MovieAdapter(movies, getContext(), movie -> {
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("movie", movie);
+                            getParentFragmentManager().beginTransaction()
+                                    .replace(R.id.nav_host_fragment_content_main, MovieDetailFragment.class, bundle)
+                                    .addToBackStack(null)
+                                    .commit();
+                        });
+                        recyclerView.setAdapter(movieAdapter);
+                    } else {
+                        Log.d("SearchFragment", "Nenhum filme encontrado.");
+                        Toast.makeText(getContext(), "Nenhum filme encontrado.", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Log.d("SearchFragment", "Erro na resposta: " + response.code());
+                    Toast.makeText(getContext(), "Erro na resposta do servidor.", Toast.LENGTH_SHORT).show();
                 }
             }
 
