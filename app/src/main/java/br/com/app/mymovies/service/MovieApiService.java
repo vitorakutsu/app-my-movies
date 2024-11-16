@@ -7,7 +7,7 @@ import retrofit2.http.Query;
 import br.com.app.mymovies.entities.Movie;
 
 public interface MovieApiService {
-    @GET("api/find-movies")
+    @GET("/api/movies")
     Call<List<Movie>> getMovies(@Query("filter") String filter);
 }
 
